@@ -1,34 +1,27 @@
 window.onload = function()
 {
-  var listaDeItensLinear = [
-    {
-      valory: 2.83,
-      cor: '#6CC4ED'
-    }
-  ];
+  var limitesZ = [1, 1.9, 2.5, 3.5, 4];
 
-  var LimitesZ = [1, 1.9, 2.5, 3.5, 4];
-
-  crieGraficoLinear(LimitesZ);
+  crieGraficoLinear(limitesZ);
 };
 
-function crieGraficoLinear(LimitesZ)
+function crieGraficoLinear(limitesZ)
 {
     var grafico = $(".grafico-linear");    
-    var valorMaximo = LimitesZ[LimitesZ.length-1];
-    var iniciaComZero = LimitesZ[0] == 0;
+    var valorMaximo = limitesZ[limitesZ.length-1];
+    var iniciaComZero = limitesZ[0] == 0;
     var porcentagemPreenchida = 0;
 
-    grafico.append(blocoQuadranteLinear(0, 0, LimitesZ[0]));
+    grafico.append(blocoGraficoLinear(0, 0, limitesZ[0]));
 
-    for(var i=1; i < LimitesZ.length; i++) {
-      var tamanho = ObtenhaTamanhoDoBloco(LimitesZ[i], valorMaximo, porcentagemPreenchida, iniciaComZero);
+    for(var i=1; i < limitesZ.length; i++) {
+      var tamanho = obtenhaTamanhoDoBloco(limitesZ[i], valorMaximo, porcentagemPreenchida, iniciaComZero);
       porcentagemPreenchida += tamanho;
-      grafico.append(blocoQuadranteLinear(i, tamanho, LimitesZ[i]));
+      grafico.append(blocoGraficoLinear(i, tamanho, limitesZ[i]));
     }
 }
 
-var blocoQuadranteLinear = function (id, tamanho, valory) {
+function blocoGraficoLinear(id, tamanho, valory) {
   $(".grafico-linear").on("click", "#bl" + id + "", function (evt) {
     if(evt.currentTarget.dataset.clicado == "true") {
       evt.currentTarget.dataset.clicado = false;
@@ -41,18 +34,19 @@ var blocoQuadranteLinear = function (id, tamanho, valory) {
     }
   });
   
-  var retorno = "<div class='bloco-quadrante' data-bloco='" + id + "' data-valory='" + valory + "' data-clicado='false'" +
+  var retorno = "<div class='bloco-linear' data-bloco='" + id + "' data-valory='" + valory + "' data-clicado='false'" +
           "style='width: " + tamanho + "%;" + (id == 0 ? " border: none;'" : "'") + 
           "id='bl" + id + "'><div class='grafico-linear-legenda'>" + valory.toFixed(2) + "</div></div>";
           return retorno;
 };
 
-function ObtenhaTamanhoDoBloco(valorAtual, valorMaximo, porcentagemPreenchida, iniciaComZero) {
+function obtenhaTamanhoDoBloco(valorAtual, valorMaximo, porcentagemPreenchida, iniciaComZero) {
   if(valorAtual == valorMaximo) {
     return Math.ceil(Math.abs(100 - porcentagemPreenchida));
   }
   
   var porcentagemAtual = (valorAtual / (iniciaComZero ? valorMaximo : (valorMaximo + 1))) * 100;
 
-    return Math.ceil(Math.abs(porcentagemAtual - porcentagemPreenchida));
+  return Math.ceil(Math.abs(porcentagemAtual - porcentagemPreenchida));
 }
+
