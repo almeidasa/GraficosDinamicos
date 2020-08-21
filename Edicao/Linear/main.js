@@ -1,6 +1,6 @@
 window.onload = function()
 {
-  var limitesZ = [1, 1.9, 2.5, 3.5, 4];
+  var limitesZ = [20, 40, 60, 80, 100];
 
   crieGraficoLinear(limitesZ);
 };
@@ -8,20 +8,16 @@ window.onload = function()
 function crieGraficoLinear(limitesZ)
 {
     var grafico = $(".grafico-linear");    
-    var valorMaximo = limitesZ[limitesZ.length-1];
-    var iniciaComZero = limitesZ[0] == 0;
-    var porcentagemPreenchida = 0;
+    var larguraBloco = 100 / (limitesZ.length - 1);
 
     grafico.append(blocoGraficoLinear(0, 0, limitesZ[0]));
 
     for(var i=1; i < limitesZ.length; i++) {
-      var tamanho = obtenhaTamanhoDoBloco(limitesZ[i], valorMaximo, porcentagemPreenchida, iniciaComZero);
-      porcentagemPreenchida += tamanho;
-      grafico.append(blocoGraficoLinear(i, tamanho, limitesZ[i]));
+        grafico.append(blocoGraficoLinear(i, larguraBloco, limitesZ[i]));
     }
 }
 
-function blocoGraficoLinear(id, tamanho, valory) {
+function blocoGraficoLinear(id, larguraBloco, valorz) {
   $(".grafico-linear").on("click", "#bl" + id + "", function (evt) {
     if(evt.currentTarget.dataset.clicado == "true") {
       evt.currentTarget.dataset.clicado = false;
@@ -34,17 +30,20 @@ function blocoGraficoLinear(id, tamanho, valory) {
     }
   });
   
-  var retorno = "<div class='bloco-linear' data-bloco='" + id + "' data-valory='" + valory + "' data-clicado='false'" +
-          "style='width: " + tamanho + "%;" + (id == 0 ? " border: none;'" : "'") + 
-          "id='bl" + id + "'><div class='grafico-linear-legenda'>" + valory.toFixed(2) + "</div></div>";
-          return retorno;
+  return "<div class='bloco-linear' data-bloco='" + id + "' data-valorz='" + valorz + "' data-clicado='false'" +
+      "style='width: " + larguraBloco + "%;" + (id == 0 ? " border: none;'" : "'") + 
+         "id='bl" + id + "'><div class='grafico-linear-legenda'>" + valorz.toFixed(2) + "</div></div>";
 };
 
-function obtenhaTamanhoDoBloco(valorAtual, valorMaximo, porcentagemPreenchida, iniciaComZero) {
+function obtenhaTamanhoDoBloco(valorAtual, valorMaximo, porcentagemPreenchida, iniciaComZero, valorInicial) {
   if(valorAtual == valorMaximo) {
     return Math.ceil(Math.abs(100 - porcentagemPreenchida));
   }
-  
+
+  if (!iniciaComZero) {
+    valorAtual = valorAtual - valorInicial;
+  }
+    
   var porcentagemAtual = (valorAtual / (iniciaComZero ? valorMaximo : (valorMaximo + 1))) * 100;
 
   return Math.ceil(Math.abs(porcentagemAtual - porcentagemPreenchida));

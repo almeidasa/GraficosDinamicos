@@ -1,75 +1,42 @@
 window.onload = function()
 {
-  var limitesX = [0, 1, 2, 3];
-  var limitesY = [0, 1, 2, 3];
-  var limitesZ = [1, 1.9, 2.5, 3.5, 4];
+  var limitesX = [20, 40, 60, 80, 100];
+  var limitesY = [20, 40, 60, 80, 100];
 
-  crieGraficoLinear(limitesZ);
-  //crieGraficoQuadrante(limitesX, limitesY);
+  crieGraficoQuadrante(limitesX, limitesY);
 };
 
-//function crieGraficoQuadrante(limitesX, limitesY) {
-//    var grafico = $(".grafico-quadrante");
-//    var valorMaximoX = limitesX[limitesX.length - 1];
-//    var valorMinimoX = limitesX[0];
-//    var valorMaximoY = limitesY[limitesY.length - 1];
-//    var valorMinimoY = limitesY[0];
+function crieGraficoQuadrante(limitesX, limitesY) {
+    var grafico = $(".grafico-quadrante");
+    var larguraBloco = 100 / (limitesX.length - 1);
+    var alturaBloco = 100 / (limitesY.length - 1);
 
+    for (var y = limitesY.length; y > 1; y--) {
+        var idEixoX = "eixox" + y;
+        grafico.append("<div style='height:" + alturaBloco + "%' class='grafico-quadrante-linha' id='" + idEixoX + "'></div>");
 
-
-//    for (var y = limitesY.length; y >= limitesY.length; i--) {
-//        var porcentagemLinhaPreenchida = 0;
-
-//        for (var x = 0; x < limitesX.length; x++) {
-//            var tamanho = obtenhaTamanhoDoBloco(limitesX[x], valorMaximoX, porcentagemLinhaPreenchida, true);
-//            porcentagemLinhaPreenchida += tamanho;
-//            grafico.append(blocoGraficoLinear(x, tamanho, limitesX[x]));
-//        }
-//    }
-//}
-
-function crieGraficoLinear(limitesZ)
-{
-    var grafico = $(".grafico-linear");    
-    var valorMaximo = limitesZ[limitesZ.length-1];
-    var iniciaComZero = limitesZ[0] == 0;
-    var porcentagemPreenchida = 0;
-
-    grafico.append(blocoGraficoLinear(0, 0, limitesZ[0]));
-
-    for(var i=1; i < limitesZ.length; i++) {
-      var tamanho = obtenhaTamanhoDoBloco(limitesZ[i], valorMaximo, porcentagemPreenchida, iniciaComZero);
-      porcentagemPreenchida += tamanho;
-      grafico.append(blocoGraficoLinear(i, tamanho, limitesZ[i]));
+        for (var x = 1; x < limitesX.length; x++) {
+            $("#" + idEixoX).append(blocoGraficoQuadrante(x, y-1, limitesX[x], limitesY[y-1], larguraBloco));
+        }
     }
 }
 
-function blocoGraficoLinear(id, tamanho, valory) {
-  $(".grafico-linear").on("click", "#bl" + id + "", function (evt) {
+function blocoGraficoQuadrante(x, y, valorx, valory, larguraBloco) {
+  var id = x.toString() + y.toString()
+
+  $(".grafico-quadrante").on("click", "#bl" + id + "", function (evt) {
     if(evt.currentTarget.dataset.clicado == "true") {
-      evt.currentTarget.dataset.clicado = false;
-      $(evt.currentTarget).removeClass('clicado');
-      $(evt.currentTarget).children("span").remove();
+        evt.currentTarget.dataset.clicado = false;
+        $(evt.currentTarget).removeClass('clicado');
+        $(evt.currentTarget).children("span").remove();
     } else {
-      evt.currentTarget.dataset.clicado = true
-      $(evt.currentTarget).addClass('clicado');
-      $(evt.currentTarget).append("<span>("+ evt.currentTarget.dataset.bloco +")</span>")
+        evt.currentTarget.dataset.clicado = true
+        $(evt.currentTarget).addClass('clicado');
+        $(evt.currentTarget).append("<span>(" + evt.currentTarget.dataset.eixox + "," + evt.currentTarget.dataset.eixoy +")</span>")
     }
   });
   
-  var retorno = "<div class='bloco-linear' data-bloco='" + id + "' data-valory='" + valory + "' data-clicado='false'" +
-          "style='width: " + tamanho + "%;" + (id == 0 ? " border: none;'" : "'") + 
-          "id='bl" + id + "'><div class='grafico-linear-legenda'>" + valory.toFixed(2) + "</div></div>";
-          return retorno;
+    return "<div class='bloco-quadrante' data-bloco='" + id + "' data-eixox='" + x + "' data-eixoy='" + y + "' data-valory='" +
+            valory + "' data-valorx='" + valorx + "' data-clicado='false' style='width: " + larguraBloco + "%' id='bl" + id + "'></div>";
 };
-
-function obtenhaTamanhoDoBloco(valorAtual, valorMaximo, porcentagemPreenchida, iniciaComZero) {
-  if(valorAtual == valorMaximo) {
-    return Math.ceil(Math.abs(100 - porcentagemPreenchida));
-  }
-  
-  var porcentagemAtual = (valorAtual / (iniciaComZero ? valorMaximo : (valorMaximo + 1))) * 100;
-
-  return Math.ceil(Math.abs(porcentagemAtual - porcentagemPreenchida));
-}
 
