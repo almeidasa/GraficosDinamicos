@@ -1,0 +1,49 @@
+.grafico-linear-container {
+    width: 191px;
+    height: 53px;
+    margin: 5px 20px 20px 15px;
+    position: absolute;
+}
+.grafico-linear {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    border-left: 1px solid #4C607A;
+    border-top: 1px solid #4C607A;
+    border-right: 1px solid #4C607A;
+}
+.bloco-linear {
+    background-color: #EEF4FC;
+    border-bottom: 1px solid #79A1E2;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+    cursor: pointer;
+}
+.bloco-linear:not(:last-child) {
+    border-right: 1px solid #79A1E2;
+}
+.bloco-linear.clicado {
+    background-color: #2678C9;
+    border: 0.5px solid white;
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.5);
+}
+.bloco-linear span {
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 22px;
+    font-size: 12px;
+}
+.grafico-linear-legenda {
+    position: relative;
+    margin-bottom: -15px;
+    margin-right: -10px;
+    font-size: 9px;
+    color: #666666;
+    font: normal normal normal 10px Arial;
+}

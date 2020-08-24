@@ -56,7 +56,7 @@ function blocoGraficoQuadrante(x, y, valorx, valory, larguraBloco) {
     }
   });
   
-    return "<div class='bloco-quadrante' data-bloco='" + id + "' data-eixox='" + x + "' data-eixoy='" + y + "' data-valory='" +
+   return "<div class='bloco-quadrante' data-bloco='" + id + "' data-eixox='" + x + "' data-eixoy='" + y + "' data-valory='" +
             valory + "' data-valorx='" + valorx + "' data-clicado='false' style='width: " + larguraBloco + "%' id='bl" + id + "'></div>";
 };
 
