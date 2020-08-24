@@ -10,10 +10,12 @@ function crieGraficoQuadrante(limitesX, limitesY) {
     var grafico = $(".grafico-quadrante");
     var larguraBloco = 100 / (limitesX.length - 1);
     var alturaBloco = 100 / (limitesY.length - 1);
+    grafico.append("<div class='legenda-eixoy'></div>")
 
     for (var y = limitesY.length; y > 1; y--) {
         var idEixoX = "eixox" + y;
-        grafico.append("<div style='height:" + alturaBloco + "%' class='grafico-quadrante-linha' id='" + idEixoX + "'></div>");
+        grafico.append("<div style='height:" + alturaBloco + "%' data-valory='" + limitesY[y-1].toFixed(2) + "' class='grafico-quadrante-linha' id='" + idEixoX + "'>" +
+            "</div>");
 
         for (var x = 1; x < limitesX.length; x++) {
             $("#" + idEixoX).append(blocoGraficoQuadrante(x, y-1, limitesX[x], limitesY[y-1], larguraBloco));

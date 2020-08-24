@@ -1,7 +1,7 @@
 .grafico-quadrante-container {
     width: 165px;
     height: 165px;
-    margin: 5px 20px 20px 40px;
+    margin: 10px 20px 20px 40px;
     position: absolute;
 }
 .grafico-quadrante {
