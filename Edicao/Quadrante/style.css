@@ -23,6 +23,7 @@
     display: flex;
     align-items: flex-end;
     flex-direction: column-reverse;
+    cursor: pointer;
 }
 
 .legenda-eixoy {
