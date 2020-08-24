@@ -25,10 +25,24 @@
     flex-direction: column-reverse;
 }
 
-.bloco-quadrante:not(:last-child) {
-    
+.legenda-eixoy {
+    position: absolute;
+    left: -38px;
+    top: -5px;
+    font: normal normal normal 10px Arial;
+    text-align: right;
+    height: 100%;
+    color: #666666;
 }
-
+.item-legenda-eixox {
+    position: relative;
+    bottom: -50px;
+    left: -11px;
+    font-size: 10px;
+    color: #666666;
+    font: normal normal normal 10px Arial;
+    width: 0;
+}
 .bloco-quadrante.clicado {
     background-color: #2678C9;
     border: 0.5px solid white;
