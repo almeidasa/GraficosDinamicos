@@ -5,7 +5,7 @@ window.onload = function()
         "TituloDoEixo": "Metas e competências (Eixo Z)",
         "ValoresZ": [
             {
-                "Valor": 1.45,
+                "Valor": 1.06,
                 "Descricao": "Auto",
                 "Cor": "#6CC4ED"
             },
@@ -22,8 +22,6 @@ window.onload = function()
         ]
     }
 
-    
-
     crieGraficoLinear(lista);
 };
 
@@ -37,24 +35,28 @@ function crieGraficoLinear(lista)
     var valoresZ = lista.ValoresZ;
 
     var valorMaximo = limitesZ[limitesZ.length - 1];
-    var valorInicial = limitesZ[0];
+    var valorMinimo = limitesZ[0];
     var porcentagemPreenchida = 0;
 
-    grafico.append(blocoGraficoLinear(0, 0, valorInicial));
+    grafico.append(blocoGraficoLinear(0, 0, valorMinimo));
 
     for (var i = 1; i < limitesZ.length; i++) {
-        var tamanho = obtenhaTamanhoDoBloco(limitesZ[i], valorMaximo, porcentagemPreenchida, valorInicial);
+        var tamanho = obtenhaTamanhoDoBloco(limitesZ[i], valorMaximo, porcentagemPreenchida, valorMinimo);
         porcentagemPreenchida += tamanho;
         grafico.append(blocoGraficoLinear(i, tamanho, limitesZ[i]));
     }
 
     for (var i = 0; i < valoresZ.length; i++) {
         var valorMaximoAjustado = valorMaximo - (valorMaximo * 2 / 100);
+        var valorMinimoAjustado = valorMinimo + (valorMinimo * 5 / 100);
         if (valoresZ[i].Valor > valorMaximoAjustado) {
             grafico.append("<div class='grafico-valor valor-maximo' data-descricao='" + valoresZ[i].Descricao + "' data data-valor='" + valoresZ[i].Valor + "'" +
                 "style='background-color:" + valoresZ[i].Cor + ";'></div>");
+        } else if (valoresZ[i].Valor <= valorMinimoAjustado) {
+            grafico.append("<div class='grafico-valor valor-minimo' data-descricao='" + valoresZ[i].Descricao + "' data data-valor='" + valoresZ[i].Valor + "'" +
+                "style='background-color:" + valoresZ[i].Cor + ";'></div>");
         } else {
-            var posicao = (obtenhaTamanhoDoBloco(valoresZ[i].Valor, valorMaximo, 0, valorInicial)-2);
+            var posicao = (obtenhaTamanhoDoBloco(valoresZ[i].Valor, valorMaximo, 0, valorMinimo)-2);
             grafico.append("<div class='grafico-valor' data-descricao='" + valoresZ[i].Descricao + "' data data-valor='" + valoresZ[i].Valor + "'" +
                 "style='left:" + posicao + "%; background-color:" + valoresZ[i].Cor + ";'></div>");
         }
@@ -67,12 +69,12 @@ function blocoGraficoLinear(id, larguraBloco, valorz) {
          "id='bl" + id + "'><div class='grafico-linear-legenda'>" + valorz.toFixed(2) + "</div></div>";
 };
 
-function obtenhaTamanhoDoBloco(valorAtual, valorMaximo, porcentagemPreenchida, valorInicial) {
+function obtenhaTamanhoDoBloco(valorAtual, valorMaximo, porcentagemPreenchida, valorMinimo) {
   if(valorAtual == valorMaximo) {
     return Math.ceil(Math.abs(100 - porcentagemPreenchida));
   }
 
-  var porcentagemAtual = Math.abs(Math.abs(valorAtual - valorInicial) / Math.abs(valorMaximo - valorInicial)) * 100;
+  var porcentagemAtual = Math.abs(Math.abs(valorAtual - valorMinimo) / Math.abs(valorMaximo - valorMinimo)) * 100;
 
   return Math.ceil(Math.abs(porcentagemAtual - porcentagemPreenchida));
 }

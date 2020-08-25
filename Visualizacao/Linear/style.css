@@ -32,19 +32,26 @@
     color: #666666;
     font: normal normal normal 10px Arial;
 }
+.grafico-valor.valor-minimo {
+    width: 5px;
+    height: 10px;
+    border-bottom: 0;
+    border-radius: 0px 60px 60px 0px;
+    left: 1px;
+}
 .grafico-valor {
     position: absolute;
     border-radius: 50%;
     height: 10px;
     width: 10px;
-    top: 50%;
+    top: 42%;
 }
 .grafico-valor.valor-maximo {
-    width: 6px;
+    width: 5px;
     height: 10px;
     border-bottom: 0;
     border-radius: 60px 0px 0px 60px;
-    left: 97%;
+    left: 97.9%;
 }
 .grafico-linear-container:before {
     content: attr(data-titulo-eixo);
