@@ -115,25 +115,9 @@ function crieGraficoQuadrante(lista) {
     legenda.append("<div class='item-legenda-eixoy' style='height:" + (100 / (limitesY.length - 1)) + "%'>" + limitesY[0].toFixed(2) + "</div>");
 
     var valores = lista.Valores;
-    var valorMinimoXAjustado = valorMinimoX + (valorMinimoX * 5 / 100);
-    var valorMaximoXAjustado = valorMaximoX - (valorMaximoX * 5 / 100);
-    var valorMinimoYAjustado = valorMinimoY + (valorMinimoY * 5 / 100);
-    var valorMaximoYAjustado = valorMaximoY - (valorMaximoY * 5 / 100)
 
     for (var i = 0; i < valores.length; i++) {
         var classe = "grafico-valor";
-
-        if (valores[i].NotaX > valorMaximoXAjustado) {
-            classe += " valor-maximo-x";
-        } else if (valores[i].NotaX <= valorMinimoXAjustado) {
-            classe += " valor-minimo-x";
-        }
-
-        if (valores[i].NotaY > valorMaximoYAjustado) {
-            classe += " valor-maximo-y";
-        } else if (valores[i].NotaY <= valorMinimoYAjustado) {
-            classe += " valor-minimo-y";
-        }
 
         var posicaoX = (obtenhaTamanhoDoBlocoX(valores[i].NotaX, limitesX[limitesX.length - 1], 0, limitesX[0]) - 3);
         var posicaoY = (obtenhaTamanhoDoBlocoX(valores[i].NotaY, limitesY[limitesY.length - 1], 0, limitesY[0]) - 3);

@@ -10,12 +10,12 @@ window.onload = function()
                 "Cor": "#6CC4ED"
             },
             {
-                "Valor": 1.9,
+                "Valor": 1,
                 "Descricao": "Gestor",
                 "Cor": "#6AB78F"
             },
             {
-                "Valor": 1.9,
+                "Valor": 4,
                 "Descricao": "Pares",
                 "Cor": "#F9F28C"
             }
@@ -46,21 +46,10 @@ function crieGraficoLinear(lista)
         grafico.append(blocoGraficoLinear(i, tamanho, limitesZ[i]));
     }
 
-    var valorMaximoAjustado = valorMaximo - (valorMaximo * 2 / 100);
-    var valorMinimoAjustado = valorMinimo + (valorMinimo * 5 / 100);
-
     for (var i = 0; i < valoresZ.length; i++) {
-        if (valoresZ[i].Valor > valorMaximoAjustado) {
-            grafico.append("<div class='grafico-valor valor-maximo' data-descricao='" + valoresZ[i].Descricao + "' data-valor='" + valoresZ[i].Valor + "'" +
-                "style='background-color:" + valoresZ[i].Cor + ";'></div>");
-        } else if (valoresZ[i].Valor <= valorMinimoAjustado) {
-            grafico.append("<div class='grafico-valor valor-minimo' data-descricao='" + valoresZ[i].Descricao + "' data-valor='" + valoresZ[i].Valor + "'" +
-                "style='background-color:" + valoresZ[i].Cor + ";'></div>");
-        } else {
-            var posicao = (obtenhaTamanhoDoBloco(valoresZ[i].Valor, valorMaximo, 0, valorMinimo)-2);
-            grafico.append("<div class='grafico-valor' data-descricao='" + valoresZ[i].Descricao + "' data-valor='" + valoresZ[i].Valor + "'" +
-                "style='left:" + posicao + "%; background-color:" + valoresZ[i].Cor + ";'></div>");
-        }
+        var posicao = (obtenhaTamanhoDoBloco(valoresZ[i].Valor, valorMaximo, 0, valorMinimo)-2);
+        grafico.append("<div class='grafico-valor' data-descricao='" + valoresZ[i].Descricao + "' data-valor='" + valoresZ[i].Valor + "'" +
+            "style='left:" + posicao + "%; background-color:" + valoresZ[i].Cor + ";'></div>");
     }
 }
 
